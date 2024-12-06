@@ -46,7 +46,7 @@ async function fetchUpcomingEvents(leagueId) {
   upcomingEvents.sort((a, b) => new Date(a.dateEvent) - new Date(b.dateEvent));
   pastEvents.sort((a, b) => new Date(b.dateEvent) - new Date(a.dateEvent));
 
-  return { upcomingEvents: upcomingEvents, pastEvents: pastEvents.slice(0,4) };
+  return { upcomingEvents: upcomingEvents, pastEvents: pastEvents.slice(0,5) };
 }
 
 const fetchApiData = async (apiSource, params) => {
