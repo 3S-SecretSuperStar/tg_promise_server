@@ -31,18 +31,22 @@ async function fetchUpcomingEvents(leagueId) {
     if (!event.dateEvent) return null; // Exclude events without a date
     const eventDate = new Date(event.dateEvent);
     if (eventDate >= currentDate)
-      upcomingEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumb: event.strThumb, dataEvent: event.dateEvent })
-    else pastEvents.push(upcomingEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumb: event.strThumb, dataEvent: event.dateEvent }))
+      upcomingEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumb: event.strThumb, dataEvent: event.dateEvent, teamA: event.strHomeTeam, teamB: event.strAwayTeam })
+    else pastEvents.push(pastEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumb: event.strThumb, dataEvent: event.dateEvent, teamAScore: intHomeScore, teamBScore: intAwayScore }))
   });
 
   if (upcomingEvents.length === 0) {
     throw new Error('No upcoming matches found for this league.');
   }
+  if (pastEvents.length === 0) {
+    throw new Error('No past matches found for this league.');
+  }
 
   // Sort by date ascending
   upcomingEvents.sort((a, b) => new Date(a.dateEvent) - new Date(b.dateEvent));
+  pastEvents.sort((a, b) => new Date(b.dateEvent) - new Date(a.dateEvent));
 
-  return upcomingEvents;
+  return { upcomingEvents: upcomingEvents, pastEvents: pastEvents };
 }
 
 const fetchApiData = async (apiSource, params) => {
