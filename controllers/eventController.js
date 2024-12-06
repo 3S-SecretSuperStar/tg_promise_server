@@ -31,8 +31,8 @@ async function fetchUpcomingEvents(leagueId) {
     if (!event.dateEvent) return null; // Exclude events without a date
     const eventDate = new Date(event.dateEvent);
     if (eventDate >= currentDate)
-      upcomingEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumb: event.strThumb, dataEvent: event.dateEvent, teamA: event.strHomeTeam, teamB: event.strAwayTeam })
-    else pastEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumb: event.strThumb, dataEvent: event.dateEvent, teamAScore: event.intHomeScore, teamBScore: event.intAwayScore })
+      upcomingEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumbA: event.strHomeTeamBudge, strThumbB: event.strAwayTeamBudge, dataEvent: event.dateEvent, teamA: event.strHomeTeam, teamB: event.strAwayTeam })
+    else pastEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumbA: event.strHomeTeamBudge, strThumbB: event.strAwayTeamBudge, dataEvent: event.dateEvent, teamAScore: event.intHomeScore, teamBScore: event.intAwayScore })
   });
 
   if (upcomingEvents.length === 0) {
