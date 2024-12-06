@@ -1,5 +1,5 @@
 const sportsApiKey = process.env.SPORTSAPIKEY;
-const getAllEvent = async (req,res) => {
+const getAllEvent = async (req, res) => {
 
 
   const data = await fetchUpcomingEvents('4387');
@@ -22,15 +22,17 @@ async function fetchUpcomingEvents(leagueId) {
 
   // Get current date
   const currentDate = new Date();
+  let upcomingEvents = [];
+  let pastEvents = [];
 
   // Filter events to get upcoming events
-  const upcomingEvents = data.events.map((event) => {
+  data.events.map((event) => {
     // console.log(event)
     if (!event.dateEvent) return null; // Exclude events without a date
     const eventDate = new Date(event.dateEvent);
     if (eventDate >= currentDate)
-      return { value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumb: event.strThumb, dataEvent: event.dateEvent }
-
+      upcomingEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumb: event.strThumb, dataEvent: event.dateEvent })
+    else pastEvents.push(upcomingEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumb: event.strThumb, dataEvent: event.dateEvent }))
   });
 
   if (upcomingEvents.length === 0) {
