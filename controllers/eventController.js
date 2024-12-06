@@ -1,8 +1,9 @@
 const sportsApiKey = process.env.SPORTSAPIKEY;
-const getAllEvent = async () => {
+const getAllEvent = async (req,res) => {
 
 
   const data = await fetchUpcomingEvents('4387');
+  res.status(200).json(data)
   console.log("data : ", data)
 }
 
