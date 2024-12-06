@@ -32,7 +32,7 @@ async function fetchUpcomingEvents(leagueId) {
     const eventDate = new Date(event.dateEvent);
     if (eventDate >= currentDate)
       upcomingEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumb: event.strThumb, dataEvent: event.dateEvent, teamA: event.strHomeTeam, teamB: event.strAwayTeam })
-    else pastEvents.push(pastEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumb: event.strThumb, dataEvent: event.dateEvent, teamAScore: intHomeScore, teamBScore: intAwayScore }))
+    else pastEvents.push(pastEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumb: event.strThumb, dataEvent: event.dateEvent, teamAScore: event.intHomeScore, teamBScore: event.intAwayScore }))
   });
 
   if (upcomingEvents.length === 0) {
