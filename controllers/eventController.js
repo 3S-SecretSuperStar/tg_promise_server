@@ -21,9 +21,10 @@ async function fetchUpcomingEvents(leagueId) {
   }
 
   // Get current date
-  const currentDate = new Date();
+  const currentDate = new Date(getCurrentDate());
   let upcomingEvents = [];
   let pastEvents = [];
+  console.log(currentDate)
 
   // Filter events to get upcoming events
   data.events.map((event) => {
@@ -46,7 +47,16 @@ async function fetchUpcomingEvents(leagueId) {
   upcomingEvents.sort((a, b) => (new Date(a.dateEvent) - new Date(b.dateEvent)));
   pastEvents.sort((a, b) => (new Date(a.dateEvent) - new Date(b.dateEvent)));
 
-  return { upcomingEvents: upcomingEvents, pastEvents: pastEvents.reverse().slice(0,5) };
+  return { upcomingEvents: upcomingEvents, pastEvents: pastEvents.reverse().slice(0, 5) };
+}
+
+const getCurrentDate = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(today.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
 }
 
 const fetchApiData = async (apiSource, params) => {
