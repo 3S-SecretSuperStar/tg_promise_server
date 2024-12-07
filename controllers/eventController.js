@@ -44,7 +44,7 @@ async function fetchUpcomingEvents(leagueId) {
 
   // Sort by date ascending
   upcomingEvents.sort((a, b) => new Date(a.dateEvent) - new Date(b.dateEvent));
-  pastEvents.sort((a, b) => new Date(b.dateEvent) - new Date(a.dateEvent));
+  pastEvents.sort((a, b) => new Date(a.dateEvent) - new Date(b.dateEvent));
 
   return { upcomingEvents: upcomingEvents, pastEvents: pastEvents.slice(0,5) };
 }
