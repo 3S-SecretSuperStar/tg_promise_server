@@ -28,7 +28,8 @@ async function fetchUpcomingEvents(leagueId) {
 
   // Filter events to get upcoming events
   data.events.map((event) => {
-    if (event.strHomeTeamBadge === null || event.strAwayTeamBadge === null) return
+    if (event.strHomeTeamBadge === null || event.strAwayTeamBadge === null 
+        ||event.intHomeScore === null || event.intAwayScore ===null) return
     // console.log(event)
     if (!event.dateEvent) return null; // Exclude events without a date
     const eventDate = new Date(event.dateEvent);
