@@ -3,6 +3,7 @@ const { Promise } = require('../models/model');
 // Create a Promise
 const createPromise = async (req, res) => {
   const { creatorId, description, betAmount, creatorChoice, resolutionDate } = req.body;
+  console.log("promise : ",res.body)
   const newPromise = new Promise({
     creator_id: creatorId,
     description: description,
