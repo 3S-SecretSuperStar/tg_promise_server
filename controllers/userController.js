@@ -65,7 +65,7 @@ const initFetchData = async (req, res) => {
     const checkState = await checkIsUnique(userId)
     let userInfo;
     if (checkState) {
-      const savedUser = await createUserFunction(userId);
+      const savedUser = await createUserFunction(name,userId, userName);
       if (createState.error)
         res.status(400).json({ message: createState.error.message });
       else userInfo = savedUser.value;
