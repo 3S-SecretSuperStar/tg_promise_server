@@ -7,7 +7,7 @@ const getAllEvent = async (req, res) => {
   console.log("data : ", data)
 }
 
-async function fetchUpcomingEvents(leagueId) {
+const fetchUpcomingEvents = async (leagueId) => {
   const apiSource = {
     endpoint: `https://www.thesportsdb.com/api/v1/json/${sportsApiKey}/eventsseason.php?id=${leagueId}`,
     method: 'GET',
@@ -92,4 +92,4 @@ const fetchApiData = async (apiSource, params) => {
   }
 }
 
-module.exports = { getAllEvent }
+module.exports = { getAllEvent,fetchUpcomingEvents }

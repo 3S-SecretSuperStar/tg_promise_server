@@ -1,5 +1,5 @@
 const express = require('express')
-const {createUser, getUser,updateUser} = require('../controllers/userController');
+const {createUser, getUser,updateUser,initFetchData} = require('../controllers/userController');
 const bet = require('../controllers/betController')
 const promise = require('../controllers/promiseController')
 const {getAllEvent} = require('../controllers/eventController')
@@ -9,6 +9,7 @@ const router = express.Router();
 router.post('/users', createUser);
 router.post('/bets', bet.createBet);
 router.post('/promises',promise.createPromise)
+router.post('/init_fetch_data',initFetchData)
 
 router.get('/users/:userId', getUser);
 router.get('/getEvents', getAllEvent);
