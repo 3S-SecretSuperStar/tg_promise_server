@@ -44,7 +44,6 @@ const promiseSchema = new mongoose.Schema({
   status: {
     type: String,
     default: "",
-    required: true,
   },
   created_date: {
     type: Date,
@@ -58,7 +57,6 @@ const promiseSchema = new mongoose.Schema({
   outcome: {
     type: String,
     default: "",
-    required: true,
   },
   bet_amount: {
     type: Number,
