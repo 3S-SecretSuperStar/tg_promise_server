@@ -55,6 +55,8 @@ const checkIsUnique = async (userId) => {
     const checkUnique = await User.findOne({ user_id: userId })
     if (checkUnique) return false;
     else return true;
+  }catch(error){
+    console.log(error)
   }
 }
 const initFetchData = async (req, res) => {
