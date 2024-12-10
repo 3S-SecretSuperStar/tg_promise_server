@@ -62,9 +62,6 @@ const promiseSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  thumb: {
-    type: String,
-  },
   creator_choice: {
     type: String,
     required: true,
