@@ -2,14 +2,15 @@ const { Promise } = require('../models/model');
 
 // Create a Promise
 const createPromise = async (req, res) => {
-  const { creatorId, description, betAmount, creatorChoice, resolutionDate } = req.body;
-  console.log("promise : ",req.body)
+  const { creatorId, description, betAmount, creatorChoice, resolutionDate, thumb } = req.body;
+  console.log("promise : ", req.body)
   const newPromise = new Promise({
     creator_id: creatorId,
     description: description,
     resolution_date: resolutionDate,
     bet_amount: betAmount,
-    creator_choice: creatorChoice
+    creator_choice: creatorChoice,
+    thumb: thumb ? thumb : ''
   })
   try {
     const savePromise = await newPromise.save();
@@ -42,13 +43,13 @@ const getPromise = async (req, res) => {
 const updatePromise = async (req, res) => {
   try {
     const updatePromise = await Promise.findOneAndUpdate(
-      { creator_id: req.pareams.creatorId }, 
-      { $set: { status: req.body.status, outcome: req.body.outcome }},
-      {new:true}
-     );
-     res.json(updatePromise);
-  }catch(error){
-    res.status(500).json({message:error.message})
+      { creator_id: req.pareams.creatorId },
+      { $set: { status: req.body.status, outcome: req.body.outcome } },
+      { new: true }
+    );
+    res.json(updatePromise);
+  } catch (error) {
+    res.status(500).json({ message: error.message })
   }
 }
 
