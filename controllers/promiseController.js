@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const { Promise } = require('../models/model');
 
 // Create a Promise
@@ -29,6 +30,24 @@ const getPromises = async (req, res) => {
   }
 }
 
+const getActionPromises = async (req, res) => {
+  try {
+    const targetObjectId = mongoose.Types.ObjectId(req.body.userObjectId)
+    const query = {
+      status: { $ne: 'finished' },
+      $or: [
+        { invited_friends: targetObjectId },
+        { creator_id: targetObjectId }
+      ]
+    };
+    const promises = await Promise.find(query);
+    if (!promises) return res.status(404).json("Promises not found")
+    res.json(promises);
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
 const getPromise = async (req, res) => {
   try {
     const promises = await Promise.find({ creator_id: req.params.creatorId });
@@ -52,4 +71,4 @@ const updatePromise = async (req, res) => {
   }
 }
 
-module.exports = { createPromise, getPromise, getPromises, updatePromise }
+module.exports = { createPromise, getPromise, getPromises, updatePromise, getActionPromises }
