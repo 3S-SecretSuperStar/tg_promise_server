@@ -32,7 +32,7 @@ const getPromises = async (req, res) => {
 
 const getActionPromises = async (req, res) => {
   try {
-    const targetObjectId = mongoose.Types.ObjectId(req.body.userObjectId)
+    const targetObjectId = new mongoose.Types.ObjectId(req.body.userObjectId)
     const query = {
       status: { $ne: 'finished' },
       $or: [
