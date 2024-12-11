@@ -10,7 +10,8 @@ router.post('/users', createUser);
 router.post('/bets', bet.createBet);
 router.post('/promises',promise.createPromise)
 router.post('/init_fetch_data',initFetchData)
-router.post('/active_promises',promise.getActionPromises)
+router.post('/active_promises',promise.getActivePromises)
+router.post('/end_promises',promise.getEndPromises)
 
 router.get('/users/:userId', getUser);
 router.get('/getEvents', getAllEvent);
