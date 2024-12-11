@@ -30,11 +30,29 @@ const getPromises = async (req, res) => {
   }
 }
 
-const getActionPromises = async (req, res) => {
+const getActivePromises = async (req, res) => {
   try {
     const targetObjectId = new mongoose.Types.ObjectId(req.body.userObjectId)
     const query = {
       status: { $ne: 'finished' },
+      $or: [
+        { invited_friends: targetObjectId },
+        { creator_id: targetObjectId }
+      ]
+    };
+    const promises = await Promise.find(query);
+    if (!promises) return res.status(404).json("Promises not found")
+    res.json(promises);
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+const getEndPromises = async (req, res) => {
+  try {
+    const targetObjectId = new mongoose.Types.ObjectId(req.body.userObjectId)
+    const query = {
+      status: 'finished',
       $or: [
         { invited_friends: targetObjectId },
         { creator_id: targetObjectId }
@@ -71,4 +89,5 @@ const updatePromise = async (req, res) => {
   }
 }
 
-module.exports = { createPromise, getPromise, getPromises, updatePromise, getActionPromises }
+module.exports = { createPromise, getPromise, getPromises, updatePromise, 
+                   getActivePromises, getEndPromises }
