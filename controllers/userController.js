@@ -92,7 +92,7 @@ const deposit = async (req, res) => {
     const { amount, userObjectId } = req.body;
     const updatedData = await User.findByIdAndUpdate(userObjectId, { $inc: { amount: amount } });
     console.log('deposit', updatedData)
-    res.status(200).json(updatedData);
+    res.status(200).json({...updatedData, amount:updatedData.amount+amount});
 
   } catch (error) {
     res.status(500).json({ message: error.message })
