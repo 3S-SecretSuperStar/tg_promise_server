@@ -21,7 +21,7 @@ router.get('/bets/:promiseId',bet.getBet)
 router.get('/promises',promise.getPromises)
 router.get('/promises:creatorId',promise.getPromise)
 
-router.put('/users/:userId', updateUser);
+router.put('/users/:userId', user.updateUser);
 router.put('/bets/:promiseId',bet.updateBet);
 router.put('/promises',promise.updatePromise);
 
