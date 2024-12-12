@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator');
 const { User } = require('../models/model');
 const { fetchUpcomingEvents } = require('./eventController');
 
@@ -55,7 +56,7 @@ const checkIsUnique = async (userId) => {
     const checkUnique = await User.findOne({ user_id: userId })
     if (checkUnique) return false;
     else return true;
-  }catch(error){
+  } catch (error) {
     console.log(error)
   }
 }
@@ -65,7 +66,7 @@ const initFetchData = async (req, res) => {
     const checkState = await checkIsUnique(userId)
     let userInfo;
     if (checkState) {
-      const savedUser = await createUserFunction(name,userId, userName);
+      const savedUser = await createUserFunction(name, userId, userName);
       if (savedUser.error)
         res.status(400).json({ message: savedUser.error.message });
       else userInfo = savedUser.value;
@@ -81,9 +82,26 @@ const initFetchData = async (req, res) => {
   }
 }
 
+const deposit = async (req, res) => {
+  try {
+    const error = validationResult(req)
+    if (!error.isEmpty()) {
+      return res.status(400).json({ errors: error.array() })
+    }
+
+    const { amount, userObjectId } = req.body;
+    const updatedData = await User.findByIdAndUpdate(userObjectId,{$inc:{amount:amount}});
+    res.status(200).json(updatedData);
+
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
 module.exports = {
   createUser,
   getUser,
   updateUser,
   initFetchData,
+  deposit
 }
