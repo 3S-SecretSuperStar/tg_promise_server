@@ -90,8 +90,8 @@ const deposit = async (req, res) => {
     }
 
     const { amount, userObjectId } = req.body;
-    const updatedData = await User.findByIdAndUpdate(userObjectId,{$inc:{amount:amount}});
-    console.log('deposit',updatedData)
+    const updatedData = await User.findByIdAndUpdate(userObjectId, { $inc: { amount: amount } });
+    console.log('deposit', updatedData)
     res.status(200).json(updatedData);
 
   } catch (error) {
