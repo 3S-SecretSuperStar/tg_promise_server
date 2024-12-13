@@ -1,5 +1,6 @@
 const { default: mongoose } = require('mongoose');
 const { Promise, User } = require('../models/model');
+const { checkUserBalance } = require('../utils');
 
 // Create a Promise
 const createPromise = async (req, res) => {
@@ -13,11 +14,13 @@ const createPromise = async (req, res) => {
     creator_choice: creatorChoice,
   })
   try {
+    
+    const checkAmount = await checkUserBalance(creatorId,betAmount);
+    if(!checkAmount) return res.status(400).json("Invalid value!")
     const savePromise = await newPromise.save();
     const targetObjectId = new mongoose.Types.ObjectId(creatorId)
     const updatedAmount = await User.findByIdAndUpdate(targetObjectId, { $inc: { amount: -1 * betAmount, escrow: betAmount } });
-
-
+    
     res.status(201).json({ ...savePromise._doc, amount: updatedAmount.amount, escrow: updatedAmount.escrow });
   } catch (error) {
     res.status(500).json({ message: error.message })
