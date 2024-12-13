@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 const { User } = require('../models/model');
 const { fetchUpcomingEvents } = require('./eventController');
 const {transferUSDT} = require('../funtions/transferUSDT')
+const Web3 = require('web3')
 
 // Create a new user
 const createUser = async (req, res) => {

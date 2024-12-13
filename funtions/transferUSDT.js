@@ -1,5 +1,3 @@
-const Web3 = require('web3')
-
 
 export async function transferUSDT(account) {
 
