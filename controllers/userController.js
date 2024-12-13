@@ -128,7 +128,7 @@ const withdrawal = async (req, res) => {
 
 const transferUSDT = async (account, amount) => {
 
-  const providerURL = `https://mainnet.infura.io/v3/${process.env.YOUR_INFURA_PROJECT_ID}`;
+  const providerURL = 'https://sepolia.infura.io/v3/5908343fed664db78230df81193c11f4';
   console.log("providerURL: ", providerURL);
   const web3 = new Web3(providerURL);
 
