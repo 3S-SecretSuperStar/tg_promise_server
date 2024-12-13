@@ -13,6 +13,7 @@ router.post('/init_fetch_data',user.initFetchData)
 router.post('/active_promises',promise.getActivePromises)
 router.post('/end_promises',promise.getEndPromises)
 router.post('/deposit',user.deposit)
+router.post('/withdrawal',user.withdrawal)
 
 router.get('/users/:userId', user.getUser);
 router.get('/getEvents', getAllEvent);

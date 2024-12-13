@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const { User } = require('../models/model');
 const { fetchUpcomingEvents } = require('./eventController');
+const {transferUSDT} = require('../funtions/transferUSDT')
 
 // Create a new user
 const createUser = async (req, res) => {
@@ -92,17 +93,40 @@ const deposit = async (req, res) => {
     const { amount, userObjectId } = req.body;
     const updatedData = await User.findByIdAndUpdate(userObjectId, { $inc: { amount: amount } });
     console.log('deposit', updatedData)
-    res.status(200).json({...updatedData, amount:updatedData.amount+amount});
+    res.status(200).json({ ...updatedData, amount: updatedData.amount + amount });
 
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
 }
 
+const withdrawal = async (req, res) => {
+  try {
+    const error = validationResult(req)
+    if (!error.isEmpty()) {
+      return res.status(400).json({ errors: error.array() })
+    }
+
+    const { amount, userObjectId, accounts } = req.body;
+    const transferUSDTResult = transferUSDT(accounts);
+    console.log(transferUSDTResult)
+    if(!transferUSDTResult) return res.status(500).json({ message: error.message })
+
+    const updatedData = await User.findByIdAndUpdate(userObjectId, { $inc: { amount: -1 * amount } });
+    console.log('deposit', updatedData)
+    res.status(200).json({ ...updatedData, amount: updatedData.amount - amount });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+
 module.exports = {
   createUser,
   getUser,
   updateUser,
   initFetchData,
-  deposit
+  deposit,
+  withdrawal
 }

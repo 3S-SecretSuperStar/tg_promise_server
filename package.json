@@ -17,6 +17,7 @@
     "express": "^4.21.1",
     "express-validator": "^7.2.0",
     "http": "^0.0.1-security",
-    "mongoose": "^8.8.3"
+    "mongoose": "^8.8.3",
+    "web3": "^4.16.0"
   }
 }
