@@ -1,7 +1,6 @@
 const { validationResult } = require('express-validator');
 const { User } = require('../models/model');
 const { fetchUpcomingEvents } = require('./eventController');
-const { transferUSDT } = require('../funtions/transferUSDT')
 const Web3 = require('web3')
 
 // Create a new user
@@ -109,7 +108,7 @@ const withdrawal = async (req, res) => {
     }
 
     const { amount, userObjectId, accounts } = req.body;
-    const transferUSDTResult = transferUSDT(accounts);
+    const transferUSDTResult =  await transferUSDT(accounts, amount);
     console.log(transferUSDTResult)
     if (!transferUSDTResult) return res.status(500).json({ message: error.message })
 
@@ -122,7 +121,7 @@ const withdrawal = async (req, res) => {
   }
 }
 
-const transferUSDT = async (account) => {
+const transferUSDT = async (account, amount) => {
 
   const providerURL = `https://mainnet.infura.io/v3/${process.env.YOUR_INFURA_PROJECT_ID}`;
   const web3 = new Web3(new Web3.providers.HttpProvider(providerURL));
@@ -185,7 +184,7 @@ const transferUSDT = async (account) => {
   const privateKey = process.env.PRIVATE_KEY;
   const fromAddress = process.env.ADMIN_ADDRESS; // Address derived from the private key
   const toAddress = account;
-  const amountToSend = Web3.utils.toWei('1', 'ether'); // 1 USDT in mwei (10^6)
+  const amountToSend = Web3.utils.toWei(amount, 'ether'); // 1 USDT in mwei (10^6)
 
   try {
     const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest'); // Get the nonce
