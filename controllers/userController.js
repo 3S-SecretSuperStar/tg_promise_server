@@ -47,8 +47,8 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const targetId =new  mongoose.Types.ObjectId(req.params.userId)
-    const updateUser = await User.findOneAndUpdate(
-      { user_id: targetId },
+    const updateUser = await User.findByIdAndUpdate(
+      targetId ,
       { $set: { first_login: req.body.firstLogin } },
       { new: true }
     );
