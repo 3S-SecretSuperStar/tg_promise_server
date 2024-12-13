@@ -1,5 +1,5 @@
 const { default: mongoose } = require('mongoose');
-const { Promise } = require('../models/model');
+const { Promise, User } = require('../models/model');
 
 // Create a Promise
 const createPromise = async (req, res) => {
@@ -14,7 +14,9 @@ const createPromise = async (req, res) => {
   })
   try {
     const savePromise = await newPromise.save();
-    res.status(201).json(savePromise);
+    const updatedAmount = await User.findByIdAndUpdate(userObjectId, { $inc: { amount: -1 * betAmount } });
+    
+    res.status(201).json({...savePromise,amount:updatedAmount.amount});
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
