@@ -1,3 +1,4 @@
+const { type } = require('express/lib/response');
 const mongoose = require('mongoose')
 
 const betSchema = new mongoose.Schema({
@@ -94,6 +95,10 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
     required: true
+  },
+  firstLogin: {
+    type: String,
+    default: 'true',
   }
 })
 

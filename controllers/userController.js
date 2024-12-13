@@ -3,7 +3,7 @@ const { User } = require('../models/model');
 const { fetchUpcomingEvents } = require('./eventController');
 const {Web3 }= require('web3');
 const dotenv = require('dotenv');
-const Web3HttpProvider = require('web3-providers-http');
+const { default: mongoose } = require('mongoose');
 dotenv.config();
 
 
@@ -46,9 +46,10 @@ const getUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
+    const targetId = mongoose.Types.ObjectId(req.params.userId)
     const updateUser = await User.findOneAndUpdate(
-      { user_id: req.params.userId },
-      { $inc: { amount: req.body.amount, escrow: req.body.escrow } },
+      { user_id: targetId },
+      { $set: { first_login: req.body.firstLogin } },
       { new: true }
     );
     if (!updateUser) return res.status(404).json({ message: 'User not found' });
