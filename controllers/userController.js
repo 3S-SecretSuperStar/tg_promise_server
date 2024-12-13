@@ -126,7 +126,7 @@ const transferUSDT = async (account, amount) => {
 
   const providerURL = `https://mainnet.infura.io/v3/${process.env.YOUR_INFURA_PROJECT_ID}`;
   console.log("providerURL: ", providerURL);
-  const web3 = new Web3(new Web3.providers.HttpProvider(providerURL));
+  const web3 = new Web3(providerURL);
 
 
   const TetherABI = [
