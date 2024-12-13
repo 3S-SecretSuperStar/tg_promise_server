@@ -1,7 +1,8 @@
 const { validationResult } = require('express-validator');
 const { User } = require('../models/model');
 const { fetchUpcomingEvents } = require('./eventController');
-const Web3 = require('web3')
+const Web3 = require('web3');
+
 
 // Create a new user
 const createUser = async (req, res) => {
@@ -108,7 +109,7 @@ const withdrawal = async (req, res) => {
     }
 
     const { amount, userObjectId, accounts } = req.body;
-    const transferUSDTResult =  await transferUSDT(accounts, amount);
+    const transferUSDTResult = await transferUSDT(accounts, amount);
     console.log(transferUSDTResult)
     if (!transferUSDTResult) return res.status(500).json({ message: error.message })
 
@@ -124,6 +125,7 @@ const withdrawal = async (req, res) => {
 const transferUSDT = async (account, amount) => {
 
   const providerURL = `https://mainnet.infura.io/v3/${process.env.YOUR_INFURA_PROJECT_ID}`;
+  console.log("providerURL: ", providerURL);
   const web3 = new Web3(new Web3.providers.HttpProvider(providerURL));
 
 
