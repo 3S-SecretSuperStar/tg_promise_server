@@ -14,7 +14,7 @@ const createPromise = async (req, res) => {
   })
   try {
     const savePromise = await newPromise.save();
-    const updatedAmount = await User.findByIdAndUpdate(userObjectId, { $inc: { amount: -1 * betAmount } });
+    const updatedAmount = await User.findByIdAndUpdate(creatorChoice, { $inc: { amount: -1 * betAmount } });
     
     res.status(201).json({...savePromise,amount:updatedAmount.amount});
   } catch (error) {

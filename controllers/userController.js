@@ -128,35 +128,12 @@ const withdrawal = async (req, res) => {
 
 const transferUSDT = async (account, amount) => {
 
-  const providerURL = 'https://sepolia.infura.io/v3/5908343fed664db78230df81193c11f4';
+  const providerURL = `https://mainnet.infura.io/v3/${YOUR_INFURA_PROJECT_ID}`;
   console.log("providerURL: ", providerURL);
   const web3 = new Web3(providerURL);
 
 
   const TetherABI = [
-    // {
-    //   "constant": false,
-    //   "inputs": [
-    //     {
-    //       "name": "_to",
-    //       "type": "address"
-    //     },
-    //     {
-    //       "name": "_value",
-    //       "type": "uint256"
-    //     }
-    //   ],
-    //   "name": "transfer",
-    //   "outputs": [
-    //     {
-    //       "name": "",
-    //       "type": "bool"
-    //     }
-    //   ],
-    //   "payable": false,
-    //   "stateMutability": "nonpayable",
-    //   "type": "function"
-    // }    
     {
       "constant": false,
       "inputs": [
@@ -179,18 +156,41 @@ const transferUSDT = async (account, amount) => {
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
-    }
+    }    
+    // {
+    //   "constant": false,
+    //   "inputs": [
+    //     {
+    //       "name": "_to",
+    //       "type": "address"
+    //     },
+    //     {
+    //       "name": "_value",
+    //       "type": "uint256"
+    //     }
+    //   ],
+    //   "name": "transfer",
+    //   "outputs": [
+    //     {
+    //       "name": "",
+    //       "type": "bool"
+    //     }
+    //   ],
+    //   "payable": false,
+    //   "stateMutability": "nonpayable",
+    //   "type": "function"
+    // }
   ];
 
   // Replace with the Tether contract address
-  const tetherContractAddress = '0x8387661cE39d3A3Cb2f4c73bb33a9138f021cD2e';
+  const tetherContractAddress = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
   const tetherContract = new web3.eth.Contract(TetherABI, tetherContractAddress);
 
   // Replace with your private key
   const privateKey = process.env.PRIVATE_KEY;
   const fromAddress = process.env.ADMIN_ADDRESS; // Address derived from the private key
   const toAddress = account;
-  const amountToSend = Web3.utils.toWei(amount, 'ether'); // 1 USDT in mwei (10^6)
+  const amountToSend = Web3.utils.toWei(amount, 'Mwei'); // 1 USDT in mwei (10^6)
 
   try {
     const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest'); // Get the nonce
@@ -204,7 +204,7 @@ const transferUSDT = async (account, amount) => {
       gas: gasLimit, // Adjust gas limit as needed
       gasPrice: gasPrice,
       data: tetherContract.methods.transfer(toAddress, amountToSend).encodeABI(),
-      chainId: 11155111 // sopelia chainId
+      chainId: 1 // sopelia chainId
     };
 
     const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
