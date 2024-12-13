@@ -204,7 +204,7 @@ const transferUSDT = async (account, amount) => {
       gas: gasLimit, // Adjust gas limit as needed
       gasPrice: gasPrice,
       data: tetherContract.methods.transfer(toAddress, amountToSend).encodeABI(),
-      chainId: 11155111 // Mainnet chainId
+      chainId: 11155111 // sopelia chainId
     };
 
     const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
