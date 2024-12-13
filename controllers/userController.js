@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator');
 const { User } = require('../models/model');
 const { fetchUpcomingEvents } = require('./eventController');
-const Web3 = require('web3');
+const {Web3 }= require('web3');
 const dotenv = require('dotenv');
 const Web3HttpProvider = require('web3-providers-http');
 dotenv.config();
