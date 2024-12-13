@@ -195,12 +195,13 @@ const transferUSDT = async (account, amount) => {
   try {
     const nonce = await web3.eth.getTransactionCount(fromAddress, 'latest'); // Get the nonce
     const gasPrice = await web3.eth.getGasPrice(); // Get the gas price
+    const gasLimit = await tetherContract.methods.transfer(toAddress, amount).estimateGas({ from: fromAddress });
 
     const tx = {
       from: fromAddress,
       to: tetherContractAddress,
       nonce: nonce,
-      gas: 2000000, // Adjust gas limit as needed
+      gas: gasLimit, // Adjust gas limit as needed
       gasPrice: gasPrice,
       data: tetherContract.methods.transfer(toAddress, amountToSend).encodeABI(),
       chainId: 1 // Mainnet chainId
