@@ -1,8 +1,6 @@
-require('dotenv').config();
+const dotenv = require('dotenv');
 const Web3 = require('web3')
-
-
-
+dotenv.config();
 
 export async function transferUSDT(account) {
 
