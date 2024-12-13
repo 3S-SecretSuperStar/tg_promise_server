@@ -16,8 +16,9 @@ const createPromise = async (req, res) => {
     const savePromise = await newPromise.save();
     const targetObjectId = new mongoose.Types.ObjectId(creatorId)
     const updatedAmount = await User.findByIdAndUpdate(targetObjectId, { $inc: { amount: -1 * betAmount, escrow:betAmount } });
+
     
-    res.status(201).json({...savePromise,amount:updatedAmount.amount});
+    res.status(201).json({...savePromise._doc,amount:updatedAmount.amount,escrow:updatedAmount.escrow});
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
