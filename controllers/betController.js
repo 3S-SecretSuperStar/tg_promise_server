@@ -12,7 +12,7 @@ const createBet = async (req, res) => {
     choice: choice,
   })
   try {
-    const checkAmount = await checkUserBalance(creatorId, amount);
+    const checkAmount = await checkUserBalance(userObjectId, amount);
     console.log("check amoount  ", checkAmount)
     if (!checkAmount) return res.status(400).json("Invalid value!")
     const bet = await newBet.save();
