@@ -1,4 +1,5 @@
 const { Bet } = require('../models/model');
+const { checkUserBalance } = require('../utils');
 
 // Create a Bet
 
@@ -11,9 +12,16 @@ const createBet = async (req, res) => {
     choice: choice,
   })
   try {
+    const checkAmount = await checkUserBalance(creatorId, amount);
+    console.log("check amoount  ", checkAmount)
+    if (!checkAmount) return res.status(400).json("Invalid value!")
     const bet = await newBet.save();
-    if (!bet) return res.status(404).json({ message: 'User not found' })
-    return res.status(200).json(bet)
+    console.log("check savePromise  ", bet)
+    const targetObjectId = new mongoose.Types.ObjectId(userObjectId)
+    console.log("check targetObjectId  ", targetObjectId)
+    const updatedAmount = await User.findByIdAndUpdate(targetObjectId, { $inc: { amount: -1 * amount, escrow: amount } });
+    if (!bet) return res.status(404).json({ message: 'Bet not found' })
+      res.status(200).json({ ...bet._doc, amount: updatedAmount.amount, escrow: updatedAmount.escrow });
   } catch (error) {
     return res.status(500).json({ message: error.message })
   }
