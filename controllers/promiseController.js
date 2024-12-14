@@ -16,9 +16,12 @@ const createPromise = async (req, res) => {
   try {
     
     const checkAmount = await checkUserBalance(creatorId,betAmount);
+    console.log("check amoount  ",checkAmount)
     if(!checkAmount) return res.status(400).json("Invalid value!")
     const savePromise = await newPromise.save();
+    console.log("check savePromise  ",savePromise)
     const targetObjectId = new mongoose.Types.ObjectId(creatorId)
+    console.log("check targetObjectId  ",targetObjectId)
     const updatedAmount = await User.findByIdAndUpdate(targetObjectId, { $inc: { amount: -1 * betAmount, escrow: betAmount } });
     
     res.status(201).json({ ...savePromise._doc, amount: updatedAmount.amount, escrow: updatedAmount.escrow });
