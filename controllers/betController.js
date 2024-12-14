@@ -3,10 +3,10 @@ const { Bet } = require('../models/model');
 // Create a Bet
 
 const createBet = async (req, res) => {
-  const { userId, promiseId, amount, choice } = req.body;
+  const { userObjectId, promiseObjectId, amount, choice } = req.body;
   const newBet = new Bet({
-    user_id: userId,
-    promise_id: promiseId,
+    user_id: userObjectId,
+    promise_id: promiseObjectId,
     amount: amount,
     choice: choice,
   })
