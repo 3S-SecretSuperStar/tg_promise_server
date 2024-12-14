@@ -104,9 +104,9 @@ const updatePromise = async (req, res) => {
 const invitedPromise = async (req, res) => {
   try {
     const { promiseId, userObjectId, invitedFriend } = req.body;
-    const targetPromiseId = mongoose.Types.ObjectId(promiseId)
-    const targetUserId = mongoose.Types.ObjectId(userObjectId)
-    const targetFriendId = mongoose.Types.ObjectId(invitedFriend)
+    const targetPromiseId = new mongoose.Types.ObjectId(promiseId)
+    const targetUserId = new mongoose.Types.ObjectId(userObjectId)
+    const targetFriendId = new mongoose.Types.ObjectId(invitedFriend)
     const promises = await Promise.findByIdAndUpdate(targetPromiseId, { $addToSet: { invited_friends: { $each: [targetUserId] } } });
     const inviteUser = await User.findById(targetFriendId);
     console.log("promises and invited user", promises, inviteUser);
