@@ -14,6 +14,7 @@ router.post('/active_promises',promise.getActivePromises)
 router.post('/end_promises',promise.getEndPromises)
 router.post('/deposit',user.deposit)
 router.post('/withdrawal',user.withdrawal)
+router.post('/invited_promise',promise.invitedPromise)
 
 router.get('/users/:userId', user.getUser);
 router.get('/getEvents', getAllEvent);

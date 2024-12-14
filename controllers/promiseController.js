@@ -1,5 +1,5 @@
 
-const { default: mongoose } = require('mongoose');
+const mongoose = require('mongoose');
 const { Promise, User } = require('../models/model');
 const { checkUserBalance } = require('../utils');
 
@@ -14,17 +14,18 @@ const createPromise = async (req, res) => {
     bet_amount: betAmount,
     creator_choice: creatorChoice,
   })
+
   try {
-    
-    const checkAmount = await checkUserBalance(creatorId,betAmount);
-    console.log("check amoount  ",checkAmount)
-    if(!checkAmount) return res.status(400).json("Invalid value!")
+
+    const checkAmount = await checkUserBalance(creatorId, betAmount);
+    console.log("check amoount  ", checkAmount)
+    if (!checkAmount) return res.status(400).json("Invalid value!")
     const savePromise = await newPromise.save();
-    console.log("check savePromise  ",savePromise)
+    console.log("check savePromise  ", savePromise)
     const targetObjectId = new mongoose.Types.ObjectId(creatorId)
-    console.log("check targetObjectId  ",targetObjectId)
+    console.log("check targetObjectId  ", targetObjectId)
     const updatedAmount = await User.findByIdAndUpdate(targetObjectId, { $inc: { amount: -1 * betAmount, escrow: betAmount } });
-    
+
     res.status(201).json({ ...savePromise._doc, amount: updatedAmount.amount, escrow: updatedAmount.escrow });
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -90,7 +91,7 @@ const getPromise = async (req, res) => {
 const updatePromise = async (req, res) => {
   try {
     const updatePromise = await Promise.findOneAndUpdate(
-      { creator_id: req.pareams.creatorId },
+      { creator_id: req.params.creatorId },
       { $set: { status: req.body.status, outcome: req.body.outcome } },
       { new: true }
     );
@@ -100,7 +101,25 @@ const updatePromise = async (req, res) => {
   }
 }
 
+const invitedPromise = async (req, res) => {
+  try {
+    const { promiseId, userObjectId, invitedFriend } = req.body;
+    const targetPromiseId = mongoose.Types.ObjectId(promiseId)
+    const targetUserId = mongoose.Types.ObjectId(userObjectId)
+    const targetFriendId = mongoose.Types.ObjectId(invitedFriend)
+    const promises = await Promise.findByIdAndUpdate(targetPromiseId, { $addToSet: { invited_friends: { $each: [targetUserId] } } });
+    const inviteUser = await User.findById(targetFriendId);
+    console.log("promises and invited user", promises, inviteUser);
+    res.status(200).json({ promise: promises._doc, friend: inviteUser })
+
+
+  } catch (error) {
+    res.status(500), json({ message: error.message })
+  }
+
+}
+
 module.exports = {
   createPromise, getPromise, getPromises, updatePromise,
-  getActivePromises, getEndPromises
+  getActivePromises, getEndPromises, invitedPromise
 }
