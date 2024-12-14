@@ -105,7 +105,7 @@ const invitedPromise = async (req, res) => {
   try {
     const { promiseId, userId, invitedFriend } = req.body;
     const targetPromiseId = new mongoose.Types.ObjectId(promiseId)
-    const targetUserId = new mongoose.Types.ObjectId(userObjectId)
+    // const targetUserId = new mongoose.Types.ObjectId(userObjectId)
     const targetFriendId = new mongoose.Types.ObjectId(invitedFriend)
     const user = await User.findOne({user_id:userId});
     const promises = await Promise.findByIdAndUpdate(targetPromiseId, 
