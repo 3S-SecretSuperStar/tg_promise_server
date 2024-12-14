@@ -5,4 +5,4 @@ const checkUserBalance = async(userObjectId,amount) =>{
   return userInfo.amount>=amount;
 }
 
-module.exports({checkUserBalance})
+module.exports={checkUserBalance}
