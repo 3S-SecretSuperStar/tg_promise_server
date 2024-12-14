@@ -96,7 +96,7 @@ const userSchema = new mongoose.Schema({
     default: 0,
     required: true
   },
-  firstLogin: {
+  first_login: {
     type: String,
     default: 'true',
   }
