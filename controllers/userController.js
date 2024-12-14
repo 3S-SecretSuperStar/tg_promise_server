@@ -4,6 +4,7 @@ const { fetchUpcomingEvents } = require('./eventController');
 const {Web3 }= require('web3');
 const dotenv = require('dotenv');
 const { default: mongoose } = require('mongoose');
+const { checkUserBalance } = require('../utils');
 dotenv.config();
 
 
@@ -98,6 +99,9 @@ const deposit = async (req, res) => {
     }
 
     const { amount, userObjectId } = req.body;
+    const checkAmount = await checkUserBalance(userObjectId, amount);
+    console.log("check amoount  ", checkAmount)
+    if (!checkAmount) return res.status(400).json("Invalid value!")
     const updatedData = await User.findByIdAndUpdate(userObjectId, { $inc: { amount: amount } });
     console.log('deposit', updatedData)
     res.status(200).json({ ...updatedData, amount: updatedData.amount + amount });
@@ -115,6 +119,9 @@ const withdrawal = async (req, res) => {
     }
 
     const { amount, userObjectId, accounts } = req.body;
+    const checkAmount = await checkUserBalance(userObjectId, amount);
+    console.log("check amoount  ", checkAmount)
+    if (!checkAmount) return res.status(400).json("Invalid value!")
     const transferUSDTResult = await transferUSDT(accounts, amount);
     console.log(transferUSDTResult)
     if (!transferUSDTResult) return res.status(500).json({ message: error.message })
