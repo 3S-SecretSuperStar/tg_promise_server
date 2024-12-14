@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+
+const { default: mongoose } = require('mongoose');
 const { Promise, User } = require('../models/model');
 const { checkUserBalance } = require('../utils');
 
