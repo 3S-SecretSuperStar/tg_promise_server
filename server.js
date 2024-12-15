@@ -22,6 +22,8 @@ connectDB();
 // Routes
 app.use('/api',userRoutes);
 
+
+
 // Start the Server
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {

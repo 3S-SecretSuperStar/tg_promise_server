@@ -19,6 +19,7 @@
     "express-validator": "^7.2.0",
     "http": "^0.0.1-security",
     "mongoose": "^8.9.0",
+    "node-cron": "^3.0.3",
     "web3": "^4.16.0",
     "web3-providers-http": "^4.2.0"
   }
