@@ -29,6 +29,14 @@ const betSchema = new mongoose.Schema({
     type: Number,
     default: 0,
     required: true
+  },
+  won_count:{
+    type:Number,
+    default:0
+  },
+  lost_count:{
+    type:Number,
+    default:0
   }
 });
 

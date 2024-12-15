@@ -8,7 +8,7 @@ const finishPromise = async () => {
     ]
   });
   const resolveResult = promises.map(async (_promise) => {
-    const resolvePromiseResult = await resolvePromise(_promise);
+    await resolvePromise(_promise);
   })
 
 }
@@ -33,8 +33,8 @@ const resolvePromise = async (promise) => {
       else loser.push(promise.creator_id)
       const totalProfit = loser.length * Number(betAmount);
       const winnerProfit = promise_bet_amount + (totalProfit * 0.8) / loser.length;
-      const winnerResult = await User.updateMany({ _id: winners }, { $inc: { amount: winnerProfit, escrow: -1 * betAmount } })
-      const loserResult = await User.updateMany({ _id: loser }, { $inc: { escrow: -1 * betAmount } })
+      const winnerResult = await User.updateMany({ _id: winners }, { $inc: { amount: winnerProfit, escrow: -1 * betAmount, w0n_count: 1 } })
+      const loserResult = await User.updateMany({ _id: loser }, { $inc: { escrow: -1 * betAmount, lost_count: 1 } })
 
     } catch (error) {
       console.log("resolve_event : ", error)
@@ -124,4 +124,4 @@ function determineWinner(event) {
   }
 }
 
-module.exports= {finishPromise};
+module.exports = { finishPromise };
