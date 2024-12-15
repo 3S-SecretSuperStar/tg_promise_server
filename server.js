@@ -4,7 +4,8 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRouter');
 const http = require('http')
-const cors = require('cors')
+const cors = require('cors');
+const { finishPromise } = require('./controlGame/autoFinish');
 
 dotenv.config();
 const app = express();
@@ -20,9 +21,11 @@ app.use(cors("*"));
 connectDB();
 
 // Routes
-app.use('/api',userRoutes);
+app.use('/api', userRoutes);
 
-
+cron.schedule('0 * * * *', async () => {
+    await finishPromise();
+})
 
 // Start the Server
 const PORT = process.env.PORT || 3000;
