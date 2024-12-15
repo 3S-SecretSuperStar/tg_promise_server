@@ -33,9 +33,21 @@ const fetchUpcomingEvents = async (leagueId) => {
     if (!event.dateEvent) return null; // Exclude events without a date
     const eventDate = new Date(event.dateEvent);
     if (eventDate >= currentDate)
-      upcomingEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumbA: event.strHomeTeamBadge, strThumbB: event.strAwayTeamBadge, dataEvent: event.dateEvent, teamA: event.strHomeTeam, teamB: event.strAwayTeam })
+      upcomingEvents.push(
+        {
+          value: event.strEvent, label: event.strEvent, strEvent: event.strEvent,
+          strThumbA: event.strHomeTeamBadge, strThumbB: event.strAwayTeamBadge,
+          dataEvent: event.dateEvent, teamA: event.strHomeTeam, teamB: event.strAwayTeam,
+          idEvent: event.idEvent
+        })
     else if (event.intHomeScore !== null && event.intAwayScore !== null)
-      pastEvents.push({ value: event.strEvent, label: event.strEvent, strEvent: event.strEvent, strThumbA: event.strHomeTeamBadge, strThumbB: event.strAwayTeamBadge, dataEvent: event.dateEvent, teamAScore: event.intHomeScore, teamBScore: event.intAwayScore, teamA: event.strHomeTeam, teamB: event.strAwayTeam })
+      pastEvents.push(
+        {
+          value: event.strEvent, label: event.strEvent, strEvent: event.strEvent,
+          strThumbA: event.strHomeTeamBadge, strThumbB: event.strAwayTeamBadge, dataEvent: event.dateEvent,
+          teamAScore: event.intHomeScore, teamBScore: event.intAwayScore, teamA: event.strHomeTeam,
+          teamB: event.strAwayTeam
+        })
   });
 
   if (upcomingEvents.length === 0) {
@@ -92,4 +104,4 @@ const fetchApiData = async (apiSource, params) => {
   }
 }
 
-module.exports = { getAllEvent,fetchUpcomingEvents }
+module.exports = { getAllEvent, fetchUpcomingEvents }
