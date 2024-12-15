@@ -6,6 +6,7 @@ const userRoutes = require('./routes/userRouter');
 const http = require('http')
 const cors = require('cors');
 const { finishPromise } = require('./controlGame/autoFinish');
+const cron = require('node-cron')
 
 dotenv.config();
 const app = express();
