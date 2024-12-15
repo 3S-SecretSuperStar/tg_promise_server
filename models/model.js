@@ -70,6 +70,10 @@ const promiseSchema = new mongoose.Schema({
   invited_friends: {
     type: Array,
   },
+  id_event:{
+    type:String,
+    required:true,
+  }
 })
 
 const userSchema = new mongoose.Schema({

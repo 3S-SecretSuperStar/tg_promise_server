@@ -5,7 +5,7 @@ const { checkUserBalance } = require('../utils');
 
 // Create a Promise
 const createPromise = async (req, res) => {
-  const { creatorId, description, betAmount, creatorChoice, resolutionDate } = req.body;
+  const { creatorId, description, betAmount, creatorChoice, resolutionDate,idEvent } = req.body;
   console.log("promise : ", req.body)
   const newPromise = new Promise({
     creator_id: creatorId,
@@ -13,6 +13,7 @@ const createPromise = async (req, res) => {
     resolution_date: resolutionDate,
     bet_amount: betAmount,
     creator_choice: creatorChoice,
+    id_event:idEvent,
   })
 
   try {
